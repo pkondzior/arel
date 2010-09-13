@@ -1,6 +1,6 @@
 module Arel
   module Nodes
-    class Function
+    class Function < Base
       attr_accessor :expressions, :alias
 
       def initialize expr, aliaz = nil
@@ -11,11 +11,6 @@ module Arel
       def as aliaz
         self.alias = SqlLiteral.new(aliaz)
         self
-      end
-
-      def to_sql
-        viz = Visitors::ToSql.new Table.engine
-        viz.accept self
       end
     end
   end

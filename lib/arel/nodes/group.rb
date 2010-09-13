@@ -6,6 +6,10 @@ module Arel
       def initialize expr
         @expr = expr
       end
+
+      def to_sql
+        self.expr.to_sql
+      end
     end
   end
 end

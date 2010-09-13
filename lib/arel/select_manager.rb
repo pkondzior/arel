@@ -19,8 +19,7 @@ module Arel
 
     def where_clauses
       warn "where_clauses is deprecated" if $VERBOSE
-      to_sql = Visitors::ToSql.new @engine
-      @ctx.wheres.map { |c| to_sql.accept c }
+      @ctx.wheres.map { |c| Arel::Table.cast_sql(c) }
     end
 
     def lock locking = true
@@ -109,13 +108,12 @@ module Arel
     end
 
     def join_sql
-      viz = Visitors::JoinSql.new @engine
-      Nodes::SqlLiteral.new viz.accept @ctx
+      Nodes::SqlLiteral.new(@ctx.froms.grep(Nodes::Join).map { |x| x.to_sql(false) }.join ', ')
     end
 
     def order_clauses
-      Visitors::OrderClauses.new(@engine).accept(@head).map { |x|
-        Nodes::SqlLiteral.new x
+      @head.orders.map { |x| Arel::Table.cast_sql(x) }.map { |x|
+        Nodes::SqlLiteral.new(x)
       }
     end
 

@@ -32,7 +32,7 @@ module Arel
         it 'takes a second argument for join type' do
           right     = @relation.alias
           predicate = @relation[:id].eq(right[:id])
-          mgr = @relation.join(right, Nodes::OuterJoin).on(predicate)
+          mgr = @relation.join(right, Nodes::LeftOuterJoin).on(predicate)
 
           mgr.to_sql.should be_like %{
            SELECT FROM "users"

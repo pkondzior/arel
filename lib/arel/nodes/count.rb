@@ -9,6 +9,12 @@ module Arel
         super(expr, aliaz)
         @distinct = distinct
       end
+
+      def to_sql
+        "COUNT(#{self.distinct ? 'DISTINCT ' : ''}#{self.expressions.map { |x|
+        self.cast_sql(x)
+        }.join(', ')})#{self.alias ? " AS #{self.cast_sql(self.alias)}" : ''}"
+      end
     end
   end
 end

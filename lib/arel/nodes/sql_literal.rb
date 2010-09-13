@@ -8,6 +8,10 @@ module Arel
       def maximum
         Nodes::Max.new [self], Nodes::SqlLiteral.new('max_id')
       end
+
+      def to_sql
+        self
+      end
     end
   end
 end

@@ -187,7 +187,7 @@ module Arel
         manager   = Arel::SelectManager.new Table.engine
 
         manager.from left
-        manager.join(right, Nodes::OuterJoin).on(predicate)
+        manager.join(right, Nodes::LeftOuterJoin).on(predicate)
         manager.to_sql.should be_like %{
            SELECT FROM "users"
              LEFT OUTER JOIN "users" "users_2"

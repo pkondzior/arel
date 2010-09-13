@@ -12,8 +12,7 @@ module Arel
     end
 
     def to_sql
-      viz = Visitors::ToSql.new @engine
-      viz.accept @head
+      @head.to_sql
     end
 
     def initialize_copy other

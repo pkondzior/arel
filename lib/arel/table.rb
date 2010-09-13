@@ -3,7 +3,19 @@ module Arel
     include Arel::Crud
 
     @engine = nil
-    class << self; attr_accessor :engine; end
+    class << self
+      attr_accessor :engine
+      def cast_sql object
+        case(object.class.name)
+        when /^Arel::/
+          object.to_sql
+        when /Fixnum/
+          object
+        else
+          @engine.connection.quote(object)
+        end
+      end
+    end
 
     attr_reader :name, :engine, :aliases, :table_alias
 
@@ -80,6 +92,10 @@ module Arel
     def [] name
       name = name.to_sym
       columns.find { |column| column.name == name }
+    end
+
+    def to_sql
+      @engine.connection.quote_table_name self.name
     end
   end
 end

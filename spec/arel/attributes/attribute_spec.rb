@@ -99,6 +99,15 @@ module Arel
           relation = Table.new(:users)
           relation[:id].minimum.should be_kind_of Nodes::Min
         end
+
+        it 'should set the alias to "min_id"' do
+          relation = Table.new(:users)
+          mgr = relation.project relation[:id].minimum
+          mgr.to_sql.should be_like %{
+            SELECT MIN("users"."id") AS min_id
+            FROM "users"
+          }
+        end
       end
 
       describe '#sum' do

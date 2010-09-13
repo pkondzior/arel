@@ -8,6 +8,10 @@ module Arel
       def name
         @attribute.name
       end
+
+      def to_sql
+        "#{Arel::Table.engine.connection.quote_column_name self.name}"
+      end
     end
   end
 end

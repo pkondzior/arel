@@ -4,9 +4,8 @@ module Arel
       include Enumerable
 
       module Value # :nodoc:
-        attr_accessor :visitor
         def value
-          visitor.accept self
+          Arel::Table.cast_sql(self)
         end
 
         def name
@@ -20,11 +19,8 @@ module Arel
       end
 
       def each
-        to_sql = Visitors::ToSql.new @engine
-
         @collection.each { |c|
           c.extend(Value)
-          c.visitor = to_sql
           yield c
         }
       end

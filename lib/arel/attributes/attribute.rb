@@ -40,6 +40,10 @@ module Arel
       def gt right
         Nodes::GreaterThan.new self, right
       end
+
+      def to_sql
+        "#{Arel::Table.engine.connection.quote_table_name self.relation.name}.#{Arel::Table.engine.connection.quote_column_name self.name}"
+      end
     end
 
     class String  < Attribute; end

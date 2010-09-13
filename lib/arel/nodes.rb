@@ -1,3 +1,5 @@
+require 'arel/nodes/base'
+
 require 'arel/nodes/binary'
 require 'arel/nodes/equality'
 require 'arel/nodes/not_equal'
@@ -30,5 +32,6 @@ require 'arel/nodes/join'
 require 'arel/nodes/group'
 require 'arel/nodes/inner_join'
 require 'arel/nodes/outer_join'
+require 'arel/nodes/left_outer_join'
 require 'arel/nodes/string_join'
 require 'arel/nodes/on'
